@@ -1,0 +1,27 @@
+.btn-regular {
+
+  &:link,
+  &:visited {
+    letter-spacing: 2px;
+    display: inline-block;
+    text-decoration: none;
+    text-transform: lowercase;
+    border-bottom: 1px solid $color-primary;
+    padding: 3px;
+    transition: all .5s;
+  }
+
+  &:hover {
+    color: white;
+    background-color: $color-primary;
+    box-shadow: 0 1rem 2rem rgba(black, .15);
+    border-radius: 5px;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    transform: translateY(-2px);
+  }
+
+  &:active {
+    transform: translateY(1px);
+  }
+}
