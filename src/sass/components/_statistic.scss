@@ -1,0 +1,36 @@
+.stat-options {
+  @include clearfix;
+
+  ul {
+    list-style: none;
+    margin: 0 auto;
+
+
+    li {
+      display: inline-block;
+      text-align: center;
+      font-size: 1.5rem;
+      text-transform: uppercase;
+
+      &:not(:first-child) {
+        margin-left: 3rem;
+      }
+
+      a {
+        text-decoration: none;
+        color: $color-grey-dark;
+        font-size: 1.3rem;
+        letter-spacing: 1.5px;
+
+        &:hover {
+          color: white;
+          background-color: $color-primary;
+          border-radius: 5px;
+          padding-left: 1rem;
+          padding-right: 1rem;
+        }
+      }
+
+    }
+  }
+}

@@ -1,0 +1,28 @@
+.stat-output {
+  padding-top: 3rem;
+
+  .table {
+    margin: 0 auto;
+    width: 80%;
+    border-collapse: collapse;
+
+    caption {
+      padding-bottom: 2rem;
+      font-size: 2rem;
+      font-weight: 700;
+    }
+
+    th {
+      font-size: 1.5rem;
+      font-weight: 400;
+      padding-bottom: 1rem;
+    }
+
+    td {
+      font-size: 1.35rem;
+      padding-bottom: 0.75rem;
+      padding-top: 0.75rem;
+      border-bottom: 1px solid $color-grey-dark;
+    }
+  }
+}

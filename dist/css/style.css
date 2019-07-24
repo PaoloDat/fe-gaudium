@@ -53,6 +53,53 @@ body {
 .btn-regular:active {
   transform: translateY(1px); }
 
+.stat-options::after {
+  content: "";
+  display: table;
+  clear: both; }
+
+.stat-options ul {
+  list-style: none;
+  margin: 0 auto; }
+  .stat-options ul li {
+    display: inline-block;
+    text-align: center;
+    font-size: 1.5rem;
+    text-transform: uppercase; }
+    .stat-options ul li:not(:first-child) {
+      margin-left: 3rem; }
+    .stat-options ul li a {
+      text-decoration: none;
+      color: #777;
+      font-size: 1.3rem;
+      letter-spacing: 1.5px; }
+      .stat-options ul li a:hover {
+        color: white;
+        background-color: #55c57a;
+        border-radius: 5px;
+        padding-left: 1rem;
+        padding-right: 1rem; }
+
+.stat-output {
+  padding-top: 3rem; }
+  .stat-output .table {
+    margin: 0 auto;
+    width: 80%;
+    border-collapse: collapse; }
+    .stat-output .table caption {
+      padding-bottom: 2rem;
+      font-size: 2rem;
+      font-weight: 700; }
+    .stat-output .table th {
+      font-size: 1.5rem;
+      font-weight: 400;
+      padding-bottom: 1rem; }
+    .stat-output .table td {
+      font-size: 1.35rem;
+      padding-bottom: 0.75rem;
+      padding-top: 0.75rem;
+      border-bottom: 1px solid #777; }
+
 .section-input {
   text-align: center;
   background-color: #f7f7f7;
@@ -65,6 +112,10 @@ body {
     padding: 1.2rem 1.5rem;
     border-radius: .8rem;
     text-align: center; }
+
+.section-output {
+  padding-top: 3rem;
+  text-align: center; }
 
 .row {
   max-width: 114rem;
