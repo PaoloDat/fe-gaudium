@@ -1,5 +1,7 @@
 export const elements = {
     inputSubmit: document.querySelector('.btn__submit-input'),
+    tableOutputResult: document.querySelector('.table-output__results'),
+    statOption: document.querySelector('.stat-options'),
     inputTournamentName: document.getElementById('tournament-name'),
     inputHomeName: document.getElementById('home-name'),
     inputAwayName: document.getElementById('away-name'),

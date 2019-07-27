@@ -115,7 +115,8 @@ body {
 
 .section-output {
   padding-top: 3rem;
-  text-align: center; }
+  text-align: center;
+  background-color: antiquewhite; }
 
 .row {
   max-width: 114rem;
