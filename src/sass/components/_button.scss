@@ -1,5 +1,4 @@
 .btn-regular {
-
   &:link,
   &:visited {
     letter-spacing: 2px;
@@ -23,5 +22,23 @@
 
   &:active {
     transform: translateY(1px);
+  }
+}
+
+.btn-medium {
+
+  &:link,
+  &:visited {
+    text-decoration: none;
+    text-transform: lowercase;
+    border-bottom: 1px solid $color-primary;
+    padding: 0.5rem 1rem;
+  }
+
+  &:hover,
+  &:active {
+    color: white;
+    background-color: $color-primary;
+    border-radius: 5px;
   }
 }

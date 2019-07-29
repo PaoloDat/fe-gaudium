@@ -1,8 +1,10 @@
 import {elements} from './view/base';
 
 import * as searchView from './view/searchView';
+import * as criteriaView from './view/criteriaView';
 
 import Search from './model/Search';
+import Criteria from './model/Criteria';
 
 const state = {};
 window.state = state;
@@ -28,6 +30,11 @@ const controlSearch = async () => {
 
     if (tournamentName) {
         await state.search.getTournamentStat(tournamentName);
+        searchView.clearResult();
+        searchView.renderHeader('Статистика турнира');
+        searchView.renderResult(state.search.tournamentStat);
+        searchView.renderWDL();
+
     }
 
     if (tournamentName && homeName) {
@@ -71,10 +78,17 @@ const controlSearch = async () => {
         await state.search.getPoolQueernessStat(tournamentName, fonHome, fonAway, manHome, manAway);
     }
 
-    searchView.clearResult();
-    searchView.renderHeader('Статистика турнира');
-    searchView.renderResult(state.search.tournamentStat);
-    searchView.renderWDL();
+    controlCriteria();
+
+};
+
+/**
+ * CRITERIA CONTROLLER
+ *
+ */
+
+const controlCriteria = () => {
+    state.criteria = new Criteria();
 };
 
 /**
@@ -84,6 +98,31 @@ const controlSearch = async () => {
 
 
 elements.inputSubmit.addEventListener('click', controlSearch);
+
+elements.criteriaSelect.addEventListener('click', event => {
+
+    if (event.target.matches('.btn-criteria-add')) {
+        let id = criteriaView.getNumber();
+        criteriaView.renderCriteria(id);
+        criteriaView.addCriterion(id, 'none');
+    }
+
+
+    if (event.target.matches('.criteria-select__action--remove')) {
+        const id =event.target.closest('.criteria-list__item').dataset.removeid;
+        const item = criteriaView.getCriteriaValue(id);
+        criteriaView.deleteCriterion(item, id);
+    }
+});
+
+elements.criteriaList.addEventListener('change', event => {
+    if (event.target.matches('.criteria-list__item, .criteria-list__item *')) {
+        const id =event.target.closest('.criteria-select__list').dataset.criterionid;
+        const item = criteriaView.getCriteriaValue(id);
+        criteriaView.addCriterion(id, item);
+        console.log(state.criteria.list);
+    }
+});
 
 elements.statOption.addEventListener('click', event => {
     if (event.target.matches('.stat-tournament')) {
