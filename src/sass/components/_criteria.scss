@@ -26,7 +26,14 @@
       color: white;
       background-color: $color-orange;
       border-radius: 1rem;
+
     }
+  }
+
+  &__statistic {
+    text-decoration: none;
+    margin-left: 5rem;
+    color: $color-grey-dark;
   }
 
   &__button {
@@ -54,5 +61,18 @@
 .criteria-list {
   &__item {
     margin-bottom: 1rem;
+  }
+}
+
+.update-info__button {
+
+  margin-top: 10rem;
+  input {
+    margin-left: 2rem;
+    border: 1px solid #e7e7e7;
+    font-size: 1.4rem;
+    padding: 0.5rem 1rem;
+    border-radius: .8rem;
+    text-align: center;
   }
 }

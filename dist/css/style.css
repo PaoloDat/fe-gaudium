@@ -134,6 +134,10 @@ body {
       color: white;
       background-color: #e67e22;
       border-radius: 1rem; }
+  .criteria-select__statistic {
+    text-decoration: none;
+    margin-left: 5rem;
+    color: #777; }
   .criteria-select__button input {
     margin-left: 5rem;
     border: 1px solid #e7e7e7;
@@ -148,6 +152,16 @@ body {
 
 .criteria-list__item {
   margin-bottom: 1rem; }
+
+.update-info__button {
+  margin-top: 10rem; }
+  .update-info__button input {
+    margin-left: 2rem;
+    border: 1px solid #e7e7e7;
+    font-size: 1.4rem;
+    padding: 0.5rem 1rem;
+    border-radius: .8rem;
+    text-align: center; }
 
 .section-input {
   text-align: center;

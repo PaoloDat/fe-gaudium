@@ -1,10 +1,11 @@
-import {elements} from './view/base';
+import {elements, reasons} from './view/base';
 
 import * as searchView from './view/searchView';
 import * as criteriaView from './view/criteriaView';
 
 import Search from './model/Search';
 import Criteria from './model/Criteria';
+import {renderOption} from "./view/criteriaView";
 
 const state = {};
 window.state = state;
@@ -17,8 +18,11 @@ window.state = state;
 
 const controlSearch = async () => {
     const tournamentName = searchView.getTournamentName().trim();
+    state.tournamentName = tournamentName;
     const homeName = searchView.getHomeTeamName().trim();
+    state.homeName = homeName;
     const awayName = searchView.getAwayTeamName().trim();
+    state.awayName = awayName;
     const fonHome = searchView.getFonHome().trim();
     const fonDraw = searchView.getFonDraw().trim();
     const fonAway = searchView.getFonAway().trim();
@@ -74,7 +78,7 @@ const controlSearch = async () => {
         await state.search.getManTournamentStat(tournamentName, manHome, manDraw, manAway);
     }
 
-    if (tournamentName && manHome &&  manAway && fonHome  && fonAway) {
+    if (tournamentName && manHome && manAway && fonHome && fonAway) {
         await state.search.getPoolQueernessStat(tournamentName, fonHome, fonAway, manHome, manAway);
     }
 
@@ -89,6 +93,7 @@ const controlSearch = async () => {
 
 const controlCriteria = () => {
     state.criteria = new Criteria();
+
 };
 
 /**
@@ -99,7 +104,27 @@ const controlCriteria = () => {
 
 elements.inputSubmit.addEventListener('click', controlSearch);
 
+elements.updateInfoButton.addEventListener('click', async event => {
+    event.preventDefault();
+
+    if (event.target.matches('.btn-update-info')) {
+        const number = criteriaView.getUpdateInfoNumber();
+        console.log(number);
+        await Criteria.updateInfo(number);
+    }
+});
+
+elements.criteriaSubmit.addEventListener('click', async event => {
+    event.preventDefault();
+    if (event.target.matches('.btn-criteria-submit')) {
+        const criteria = Array.from(document.querySelectorAll('.criteria-select__list--item')).map(a => a.value).filter(value => value !== 'none');
+        const number = criteriaView.getCriteriaDrawNumber();
+        await Criteria.sendPrediction(number, state.tournamentName, state.homeName, state.awayName, criteria);
+    }
+});
+
 elements.criteriaSelect.addEventListener('click', event => {
+    event.preventDefault();
 
     if (event.target.matches('.btn-criteria-add')) {
         let id = criteriaView.getNumber();
@@ -109,22 +134,27 @@ elements.criteriaSelect.addEventListener('click', event => {
 
 
     if (event.target.matches('.criteria-select__action--remove')) {
-        const id =event.target.closest('.criteria-list__item').dataset.removeid;
+        const id = event.target.closest('.criteria-list__item').dataset.removeid;
         const item = criteriaView.getCriteriaValue(id);
         criteriaView.deleteCriterion(item, id);
     }
 });
 
 elements.criteriaList.addEventListener('change', event => {
+    event.preventDefault();
     if (event.target.matches('.criteria-list__item, .criteria-list__item *')) {
-        const id =event.target.closest('.criteria-select__list').dataset.criterionid;
+        const id = event.target.closest('.criteria-select__list').dataset.criterionid;
         const item = criteriaView.getCriteriaValue(id);
         criteriaView.addCriterion(id, item);
-        console.log(state.criteria.list);
+
+        //Для заполнения статистики после выбора причины
+        // const list = document.getElementById(`select-${id}`).getElementsByClassName('criteria-select__statistic--tournament');
+        // list[0].textContent = 'mih ha'
     }
 });
 
 elements.statOption.addEventListener('click', event => {
+    event.preventDefault();
     if (event.target.matches('.stat-tournament')) {
         if (state.search.tournamentStat) {
             searchView.clearResult();

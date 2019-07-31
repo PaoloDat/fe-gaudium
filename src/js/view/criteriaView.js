@@ -1,6 +1,9 @@
-import {elements} from "./base";
+import {elements, reasons} from "./base";
 
-export const getCriteriaValue =  id => {
+export const getCriteriaDrawNumber = () => elements.drawCriteriaNumber.value;
+export const getUpdateInfoNumber = () => elements.updateInfoNumber.value;
+
+export const getCriteriaValue = id => {
     return document.getElementById(`criteria-${id}`).value;
 };
 
@@ -8,14 +11,24 @@ export const getNumber = () => {
     return state.criteria.list.length > 0 ? state.criteria.list.length : 0;
 };
 
+export const renderOption = option => {
+   return  `
+     <option value=${option.opt}>${option.text}</option>
+    `;
+
+};
+
 export const renderCriteria = id => {
+    let optionMarkup='';
+    reasons.forEach(reason => {
+        optionMarkup = optionMarkup + renderOption(reason)
+    });
+
     const markup = `
-                            <div class="criteria-list__item" data-removeid=${id}>
-                        <select name="criteria-select__list" id="criteria-${id}" data-criterionid=${id} class="criteria-select__list">
+                            <div class="criteria-list__item" data-removeid=${id} id="select-${id}">
+                        <select name="criteria-select__list" id="criteria-${id}" data-criterionid=${id} class="criteria-select__list criteria-select__list--item">
                             <option value="none" selected>none</option>
-                            <option value="TOURNAMENT_SOME_GAMES_WITHOUT_DRAW">TOURNAMENT&nbsp;&nbsp;&nbsp;Серия матчей без ничьих</option>
-                            <option value="TOURNAMENT_SOME_GAMES_WITHOUT_HOME_WIN">TOURNAMENT&nbsp;&nbsp;&nbsp;Серия матчей без побед хозяев</option>
-                            <option value="TOURNAMENT_SOME_GAMES_WITHOUT_AWAY_WIN">TOURNAMENT&nbsp;&nbsp;&nbsp;Серия матчей без побед гостей</option>
+                            ${optionMarkup}
                         </select>
                         <select name="result-select__list" id="result-${id}" class="criteria-select__list">
                             <option value="RESULT_1">1</option>
@@ -27,6 +40,8 @@ export const renderCriteria = id => {
                         </select>
                         <a href="#" class="criteria-select__action criteria-select__action--info">info</a>
                         <a href="#" class="criteria-select__action criteria-select__action--remove">delete</a>
+                        <a href="#" class="criteria-select__statistic criteria-select__statistic--tournament">0-0-0</a>
+                        <a href="#" class="criteria-select__statistic criteria-select__statistic--all">0-0-0</a>
                          </div>
     `;
     elements.criteriaList.insertAdjacentHTML('beforeend', markup);
