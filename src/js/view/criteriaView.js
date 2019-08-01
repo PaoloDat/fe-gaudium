@@ -31,6 +31,7 @@ export const renderCriteria = id => {
                             ${optionMarkup}
                         </select>
                         <select name="result-select__list" id="result-${id}" class="criteria-select__list">
+                            <option value="RESULT_EMPTY" selected></option>
                             <option value="RESULT_1">1</option>
                             <option value="RESULT_X">x</option>
                             <option value="RESULT_2">2</option>
@@ -40,11 +41,11 @@ export const renderCriteria = id => {
                         </select>
                         <a href="#" class="criteria-select__action criteria-select__action--info">info</a>
                         <a href="#" class="criteria-select__action criteria-select__action--remove">delete</a>
-                        <a href="#" class="criteria-select__statistic criteria-select__statistic--tournament">0-0-0</a>
-                        <a href="#" class="criteria-select__statistic criteria-select__statistic--all">0-0-0</a>
+                        <a href="#" class="criteria-select__statistic criteria-select__statistic--tournament">0-0-0&nbsp;&nbsp&nbsp;0-0-0&nbsp;&nbsp;&nbsp;0-0-0</a>
+                        <a href="#" class="criteria-select__statistic criteria-select__statistic--all">0-0-0&nbsp;&nbsp;&nbsp;0-0-0&nbsp&nbsp;&nbsp;&nbsp;0-0-0</a>
                          </div>
     `;
-    elements.criteriaList.insertAdjacentHTML('beforeend', markup);
+    elements.criteriaList.insertAdjacentHTML('afterbegin', markup);
 };
 
 export const addCriterion = (id, item) => {
@@ -55,6 +56,18 @@ export const deleteCriterion = (value, id) => {
     const element = document.querySelector(`[data-removeid="${id}"]`);
     element.parentElement.removeChild(element);
     state.criteria.list[id] = 'none';
+};
+
+export const setDrawItToStorage = id => {
+    localStorage.setItem("drawId", id);
+};
+
+export const getDrawIdFromStorage = () => {
+    return localStorage.getItem("drawId");
+};
+
+export const setDrawIdInputValue = id => {
+    elements.drawCriteriaNumber.value = id;
 };
 
 

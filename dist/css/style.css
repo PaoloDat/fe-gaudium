@@ -148,7 +148,7 @@ body {
   .criteria-select__button--add {
     margin-bottom: 2rem; }
   .criteria-select__button--submit {
-    margin-top: 2rem; }
+    margin-top: 5rem; }
 
 .criteria-list__item {
   margin-bottom: 1rem; }
@@ -216,3 +216,7 @@ body {
     width: calc((100% - 1rem * 3) / 4); }
   .row .col-2-of-4--small-gap {
     width: calc(2 * (100% - 1rem * 3) / 4 + 1rem); }
+
+.row-select {
+  max-width: 95%;
+  margin: 0 5rem; }

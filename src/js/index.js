@@ -1,11 +1,10 @@
-import {elements, reasons} from './view/base';
+import {elements} from './view/base';
 
 import * as searchView from './view/searchView';
 import * as criteriaView from './view/criteriaView';
 
 import Search from './model/Search';
 import Criteria from './model/Criteria';
-import {renderOption} from "./view/criteriaView";
 
 const state = {};
 window.state = state;
@@ -84,6 +83,12 @@ const controlSearch = async () => {
 
     controlCriteria();
 
+    const drawId = criteriaView.getDrawIdFromStorage();
+    console.log(drawId);
+    if (drawId) {
+        criteriaView.setDrawIdInputValue(drawId);
+    }
+
 };
 
 /**
@@ -107,20 +112,27 @@ elements.inputSubmit.addEventListener('click', controlSearch);
 elements.updateInfoButton.addEventListener('click', async event => {
     event.preventDefault();
 
-    if (event.target.matches('.btn-update-info')) {
-        const number = criteriaView.getUpdateInfoNumber();
-        console.log(number);
+    const number = criteriaView.getUpdateInfoNumber();
+
+    if (number && event.target.matches('.btn-update-info')) {
         await Criteria.updateInfo(number);
+    } else if (event.target.matches('.btn-update-info')) {
+        alert('Введите номер тиража');
     }
 });
 
 elements.criteriaSubmit.addEventListener('click', async event => {
     event.preventDefault();
-    if (event.target.matches('.btn-criteria-submit')) {
+    const drawId = criteriaView.getCriteriaDrawNumber();
+    if (drawId && event.target.matches('.btn-criteria-submit')) {
+        criteriaView.setDrawItToStorage(drawId);
+        console.log(criteriaView.getDrawIdFromStorage());
         const criteria = Array.from(document.querySelectorAll('.criteria-select__list--item')).map(a => a.value).filter(value => value !== 'none');
-        const number = criteriaView.getCriteriaDrawNumber();
-        await Criteria.sendPrediction(number, state.tournamentName, state.homeName, state.awayName, criteria);
+        // await Criteria.sendPrediction(drawId, state.tournamentName, state.homeName, state.awayName, criteria);
+    } else if (event.target.matches('.btn-criteria-submit')) {
+        alert('Введите номер тиража');
     }
+
 });
 
 elements.criteriaSelect.addEventListener('click', event => {
@@ -142,10 +154,11 @@ elements.criteriaSelect.addEventListener('click', event => {
 
 elements.criteriaList.addEventListener('change', event => {
     event.preventDefault();
-    if (event.target.matches('.criteria-list__item, .criteria-list__item *')) {
+    if (event.target.matches('.criteria-select__list--item, .criteria-select__list--item *')) {
         const id = event.target.closest('.criteria-select__list').dataset.criterionid;
         const item = criteriaView.getCriteriaValue(id);
         criteriaView.addCriterion(id, item);
+        console.log(state.criteria.list)
 
         //Для заполнения статистики после выбора причины
         // const list = document.getElementById(`select-${id}`).getElementsByClassName('criteria-select__statistic--tournament');

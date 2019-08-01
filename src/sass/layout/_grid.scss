@@ -50,3 +50,9 @@
     width: calc(2 * (100% - #{$grid-gutter-horizontal-small} * 3) / 4 + #{$grid-gutter-horizontal-small});
   }
 }
+
+
+.row-select {
+  max-width: 95%;
+  margin: 0 5rem;
+}
