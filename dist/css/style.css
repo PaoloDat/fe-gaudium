@@ -115,6 +115,10 @@ body {
   text-transform: uppercase;
   font-size: 1.4rem;
   letter-spacing: 1.3px; }
+  .criteria-select__available_list ul {
+    list-style: none; }
+    .criteria-select__available_list ul li:not(:last-child) {
+      margin-bottom: 1.5rem; }
   .criteria-select__list {
     color: #777;
     padding: 0.7rem 1rem;
@@ -122,6 +126,8 @@ body {
     text-transform: uppercase;
     border-radius: 0.7rem;
     font-size: 1.1rem; }
+    .criteria-select__list--item {
+      width: 500px; }
   .criteria-select__action {
     color: #777;
     text-decoration: none;

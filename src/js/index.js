@@ -37,7 +37,6 @@ const controlSearch = async () => {
         searchView.renderHeader('Статистика турнира');
         searchView.renderResult(state.search.tournamentStat);
         searchView.renderWDL();
-
     }
 
     if (tournamentName && homeName) {
@@ -87,6 +86,7 @@ const controlSearch = async () => {
     console.log(drawId);
     if (drawId) {
         criteriaView.setDrawIdInputValue(drawId);
+        criteriaView.setDrawIdInputValue(drawId);
     }
 
 };
@@ -109,6 +109,26 @@ const controlCriteria = () => {
 
 elements.inputSubmit.addEventListener('click', controlSearch);
 
+elements.inputFonDraw.addEventListener('change', () => {
+    const fonHome = searchView.getFonHome().trim();
+    const fonDraw = searchView.getFonDraw().trim();
+
+    if (fonHome && fonDraw) {
+        elements.inputFonAway.value = 100 - parseInt(fonHome) - parseInt(fonDraw);
+    }
+
+});
+
+elements.inputManDraw.addEventListener('change', () => {
+    const manHome = searchView.getManHome().trim();
+    const manDraw = searchView.getManDraw().trim();
+
+    if (manHome && manDraw) {
+        elements.inputManAway.value = (100 - parseFloat(manHome) - parseFloat(manDraw)).toFixed(1);
+    }
+
+});
+
 elements.updateInfoButton.addEventListener('click', async event => {
     event.preventDefault();
 
@@ -116,6 +136,7 @@ elements.updateInfoButton.addEventListener('click', async event => {
 
     if (number && event.target.matches('.btn-update-info')) {
         await Criteria.updateInfo(number);
+        alert(`Обновлена информация для ${state.criteria.updatedNumber} матчей`);
     } else if (event.target.matches('.btn-update-info')) {
         alert('Введите номер тиража');
     }
@@ -128,11 +149,32 @@ elements.criteriaSubmit.addEventListener('click', async event => {
         criteriaView.setDrawItToStorage(drawId);
         console.log(criteriaView.getDrawIdFromStorage());
         const criteria = Array.from(document.querySelectorAll('.criteria-select__list--item')).map(a => a.value).filter(value => value !== 'none');
-        // await Criteria.sendPrediction(drawId, state.tournamentName, state.homeName, state.awayName, criteria);
+        await Criteria.sendPrediction(drawId, state.tournamentName, state.homeName, state.awayName, criteria);
+        alert("Prediction saved");
     } else if (event.target.matches('.btn-criteria-submit')) {
         alert('Введите номер тиража');
     }
 
+});
+
+elements.criteriaSelect.addEventListener('change', async event => {
+
+    event.preventDefault();
+
+
+    if (event.target.matches('.criteria-select__list--item')) {
+
+        const value = event.target.value;
+        const id = event.target.id;
+
+        if (value && value !== 'none') {
+            console.log("event");
+            console.log(value);
+            console.log(id);
+            console.log(state.tournamentName);
+        }
+
+    }
 });
 
 elements.criteriaSelect.addEventListener('click', event => {
@@ -140,10 +182,10 @@ elements.criteriaSelect.addEventListener('click', event => {
 
     if (event.target.matches('.btn-criteria-add')) {
         let id = criteriaView.getNumber();
-        criteriaView.renderCriteria(id);
+        // add groupId depending on which the options will  be loaded
+        criteriaView.renderCriteria(id, event.target.id);
         criteriaView.addCriterion(id, 'none');
     }
-
 
     if (event.target.matches('.criteria-select__action--remove')) {
         const id = event.target.closest('.criteria-list__item').dataset.removeid;

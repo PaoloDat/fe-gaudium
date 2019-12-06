@@ -12,21 +12,24 @@ export const getNumber = () => {
 };
 
 export const renderOption = option => {
-   return  `
+    return `
      <option value=${option.opt}>${option.text}</option>
     `;
 
 };
 
-export const renderCriteria = id => {
-    let optionMarkup='';
-    reasons.forEach(reason => {
+export const renderCriteria = (id, groupId) => {
+    let optionMarkup = '';
+    const reasonByGroupId = reasons.filter(reason => reason.groupId === groupId);
+    const data = reasonByGroupId[0].data;
+    data.forEach(reason => {
         optionMarkup = optionMarkup + renderOption(reason)
     });
 
     const markup = `
                             <div class="criteria-list__item" data-removeid=${id} id="select-${id}">
-                        <select name="criteria-select__list" id="criteria-${id}" data-criterionid=${id} class="criteria-select__list criteria-select__list--item">
+                        <select name="criteria-select__list" id="criteria-${id}" data-criterionid=${id} 
+                        class="criteria-select__list criteria-select__list--item">
                             <option value="none" selected>none</option>
                             ${optionMarkup}
                         </select>
@@ -39,7 +42,7 @@ export const renderCriteria = id => {
                             <option value="RESULT_X2">x2</option>
                             <option value="RESULT_12">12</option>
                         </select>
-                        <a href="#" class="criteria-select__action criteria-select__action--info">info</a>
+<!--                        <a href="#" class="criteria-select__action criteria-select__action&#45;&#45;info">info</a>-->
                         <a href="#" class="criteria-select__action criteria-select__action--remove">delete</a>
                         <a href="#" class="criteria-select__statistic criteria-select__statistic--tournament">0-0-0&nbsp;&nbsp&nbsp;0-0-0&nbsp;&nbsp;&nbsp;0-0-0</a>
                         <a href="#" class="criteria-select__statistic criteria-select__statistic--all">0-0-0&nbsp;&nbsp;&nbsp;0-0-0&nbsp&nbsp;&nbsp;&nbsp;0-0-0</a>

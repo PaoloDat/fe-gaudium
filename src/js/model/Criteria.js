@@ -28,7 +28,8 @@ export default class Criteria {
 
     static async updateInfo(id) {
         try {
-            const res = await axios.post(`${host}//prediction/draw/${id}`);
+            const res = await axios.post(`${host}/prediction/draw/${id}`);
+            this.updatedNumber = res.data;
         } catch (err) {
             console.log(err);
         }

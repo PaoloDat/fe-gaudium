@@ -13,6 +13,7 @@ export default class Search {
         }
     }
 
+
     async getHomeTeamStat(tournamentName, teamName) {
         try {
             const res = await axios(`${host}/game/hometeam/${teamName}?tournamentName=${tournamentName}`);
